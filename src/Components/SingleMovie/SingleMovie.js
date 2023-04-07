@@ -8,7 +8,7 @@ const SingleMovie = ({
 }) => {
     return (
         <div className='media'>
-            <Badge bg={vote_average>7 ? 'primary' : 'secondary'} pill={true} bsPrefix='badge'>{vote_average}</Badge>
+            <Badge bg={vote_average>7 ? 'primary' : 'secondary'} pill={true} bsPrefix='badge'>{vote_average.toFixed(1)}</Badge>
             <img
                 className='poster'
                 src={poster ? `${img_300}/${poster}` : unavailable}

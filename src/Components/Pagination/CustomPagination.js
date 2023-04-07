@@ -1,76 +1,92 @@
-// import React, { useState } from 'react';
-// import Pagination from 'react-bootstrap/Pagination';
+import "./CustomPagination.css";
 
-// const CustomPagination = ({ page, totalPages, onSelect }) => {
+const CustomPagination = ({ currentPage, totalPages, setCurrentPage }) => {
+    const totalNumbers = 5;
+    const pageNeighbours = 2;
 
-//     /////////////////////////////// 3 dots////////////////////
-//     const items = [];
-//     const range = 2; // number of pages to show before and after current page
+    const handleClick = (page) => {
+        setCurrentPage(page);
+    };
 
-//     if (totalPages <= 1) {
-//         return null; // don't show pagination if there is only one page
-//     }
+    const getRange = (from, to) => {
+        const range = [];
 
-//     const renderPage = (pageNumber) => {
-//         return (
-//             <Pagination.Item
-//                 key={pageNumber}
-//                 active={pageNumber === page}
-//                 onClick={() => onSelect(pageNumber)}
-//             >
-//                 {pageNumber}
-//             </Pagination.Item>
-//         );
-//     };
+        for (let i = from; i <= to; i++) {
+            range.push(i);
+        }
 
-//     // always render first page
-//     items.push(renderPage(1));
+        return range;
+    };
 
-//     // render '...' if currentPage > 4
-//     if (page > 4) {
-//         items.push(<Pagination.Ellipsis key="ellipsis-start" />);
-//     }
+    const getPages = () => {
+        if (totalPages <= totalNumbers) {
+            return getRange(1, totalPages);
+        }
 
-//     // render pages before and after current page
-//     for (let i = Math.max(2, page - range); i <= Math.min(totalPages - 1, page + range); i++) {
-//         items.push(renderPage(i));
-//     }
+        const leftBound = Math.max(1, currentPage - pageNeighbours);
+        const rightBound = Math.min(totalPages, currentPage + pageNeighbours);
+        const firstPage = 1;
+        const lastPage = totalPages;
 
-//     // render '...' if currentPage < totalPages - 3
-//     if (page < totalPages - 3) {
-//         items.push(<Pagination.Ellipsis key="ellipsis-end" />);
-//     }
+        const leftDots = leftBound > 2 ? ["..."] : [];
+        const rightDots = rightBound < totalPages - 1 ? ["..."] : [];
 
-//     // always render last page
-//     items.push(renderPage(totalPages));
+        const pagesToShow = getRange(leftBound, rightBound);
 
-//     return <Pagination style={{ justifyContent: 'center' }}>{items}</Pagination>;
+        const pages = [...leftDots, ...pagesToShow, ...rightDots];
 
-//     ////////////////////////////without dots////////////////////////////////
+        if (pages[0] !== firstPage) {
+            pages.unshift(firstPage);
+        }
 
-//     // const items = [];
+        if (pages[pages.length - 1] !== lastPage) {
+            pages.push(lastPage);
+        }
 
-//     // for (let number = 1; number <= totalPages; number++) {
-//     //     items.push(
-//     //         <Pagination.Item
-//     //             key={number}
-//     //             active={number === page}
-//     //             onClick={() => onSelect(number)}
-//     //         >
-//     //             {number}
-//     //         </Pagination.Item>
-//     //     )
-//     // }
+        return pages;
+    };
 
-//     // return (
-//     //     <Pagination style={{ justifyContent: 'center' }}>
-//     //         {items}
-//     //     </Pagination>
-//     // );
-// };
+    const pages = getPages();
 
+    return (
+        <div className="pagination-container">
+            <nav>
+                <ul className="pagination">
+                    <li
+                        className={`page-item${currentPage === 1 ? " disabled" : ""}`}
+                        onClick={() => handleClick(currentPage - 1)}
+                    >
+                        <span className="page-link">Previous</span>
+                    </li>
+                    {pages.map((page, index) => {
+                        if (page === "...") {
+                            return (
+                                <li key={index} className="page-item disabled">
+                                    <span className="page-link">&hellip;</span>
+                                </li>
+                            );
+                        }
 
-// export default CustomPagination;
+                        return (
+                            <li
+                                key={index}
+                                className={`page-item${page === currentPage ? " active" : ""}`}
+                                onClick={() => handleClick(page)}
+                            >
+                                <span className="page-link">{page}</span>
+                            </li>
+                        );
+                    })}
+                    <li
+                        className={`page-item${currentPage === totalPages ? " disabled" : ""}`}
+                        onClick={() => handleClick(currentPage + 1)}
+                    >
+                        <span className="page-link">Next</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    );
+};
 
-
-
+export default CustomPagination;
