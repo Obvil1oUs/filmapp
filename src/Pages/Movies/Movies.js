@@ -11,18 +11,19 @@ function Movies() {
     const [totalPages, setTotalPages] = useState(1);
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [genres, setGenres] = useState([]);
-    
+
     useEffect(() => {
         if (page === 1) {
             setMovies([]);
         }
-        fetchMovies(page).then((data) => {
+        fetchMovies(page, selectedGenres).then((data) => {
             setMovies((prevMovies) => [
                 ...data.results.filter((movie) => !prevMovies.some((m) => m.id === movie.id)),
             ]);
             setTotalPages(data.total_pages);
         });
-    }, [page]);
+    }, [page, selectedGenres]);
+
 
     const handlePageChange = (newPage) => {
         setPage(newPage);

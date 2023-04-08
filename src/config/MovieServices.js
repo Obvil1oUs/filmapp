@@ -13,9 +13,9 @@ const fetchPopularMovies = async (page = 1) => {
         });
 }
 
-const fetchMovies = async (page = 1) => {
+const fetchMovies = async (page = 1, genreforURL) => {
     return await axios
-        .get(`${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&page=${page}`)
+        .get(`${TMDB_BASE_URL}/discover/movie?api_key=${TMDB_API_KEY}&page=${page}&with_genres=${genreforURL}`)
         .then((response) => response.data)
         .catch((error) => {
             console.error(error);

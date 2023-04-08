@@ -2,14 +2,13 @@ import React, { useEffect } from 'react';
 import { Form, FormGroup, FormCheck } from 'react-bootstrap';
 import { fetchGenres } from '../../config/MovieServices';
 
-const Genres = ({ selectedGenres, setSelectedGenres, genres, setGenres, type, setPage }) => {
+const Genres = ({ selectedGenres, setSelectedGenres, genres, setGenres, setPage }) => {
 
     useEffect(() => {
         fetchGenres('movie').then((data) => {
             setGenres(data.genres);
         });
-        // eslint-disable-next-line
-    }, []);
+    }, [setGenres]);
 
     return (
         <div>
@@ -29,7 +28,7 @@ const Genres = ({ selectedGenres, setSelectedGenres, genres, setGenres, type, se
                                     setSelectedGenres(selectedGenres.filter((id) => id !== genre.id));
                                 }
                                 setPage(1);
-                            }} 
+                            }}
                             className="mr-4 form-check-inline"
                         />
                     ))}
