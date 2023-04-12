@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { Form, FormGroup, FormCheck } from 'react-bootstrap';
 import { fetchGenres } from '../../config/MovieServices';
 
-const Genres = ({ selectedGenres, setSelectedGenres, genres, setGenres, setPage }) => {
+const Genres = ({ selectedGenres, setSelectedGenres, genres, setGenres, setPage, type }) => {
 
     useEffect(() => {
-        fetchGenres('movie').then((data) => {
+        fetchGenres(type).then((data) => {
             setGenres(data.genres);
+            console.log(data.genres);
         });
+        // eslint-disable-next-line
     }, [setGenres]);
 
     return (

@@ -23,9 +23,9 @@ const fetchMovies = async (page = 1, genreforURL) => {
         });
 }
 
-const fetchGenres = async (type) => {
+const fetchSeries = async (page = 1, genreforURL) => {
     return await axios
-        .get(`https://api.themoviedb.org/3/genre/${type}/list?api_key=82367e0f312d2993c4c7250494809cfe&language=en-US`)
+        .get(`${TMDB_BASE_URL}/discover/tv?api_key=${TMDB_API_KEY}&page=${page}&with_genres=${genreforURL}`)
         .then((response) => response.data)
         .catch((error) => {
             console.error(error);
@@ -33,4 +33,14 @@ const fetchGenres = async (type) => {
         });
 }
 
-export { fetchMovies, fetchPopularMovies, fetchGenres };
+const fetchGenres = async (type) => {
+    return await axios
+        .get(`${TMDB_BASE_URL}/genre/${type}/list?api_key=${TMDB_API_KEY}&language=en-US`)
+        .then((response) => response.data)
+        .catch((error) => {
+            console.error(error);
+            return [];
+        });
+}
+
+export { fetchMovies, fetchPopularMovies, fetchSeries, fetchGenres };
