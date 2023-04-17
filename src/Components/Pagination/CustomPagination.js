@@ -22,7 +22,6 @@ const CustomPagination = ({ currentPage, totalPages, setCurrentPage }) => {
         if (totalPages <= totalNumbers) {
             return getRange(1, totalPages);
         }
-
         const leftBound = Math.max(1, currentPage - pageNeighbours);
         const rightBound = Math.min(totalPages, currentPage + pageNeighbours);
         const firstPage = 1;

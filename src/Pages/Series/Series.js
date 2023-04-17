@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import SingleMovie from "../../Components/SingleMovie/SingleMovie";
-import { fetchSeries } from "../../config/MovieServices";
+import { fetchSeries } from "../../services/MovieServices";
 import CustomPagination from "../../Components/Pagination/CustomPagination";
 import Genres from "../../Components/Genres/Genres";
 
 function Movies() {
     const [movies, setMovies] = useState([]);
     const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [genres, setGenres] = useState([]);
+    const totalPages = 500;
 
     useEffect(() => {
         if (page === 1) {
@@ -19,7 +19,7 @@ function Movies() {
             setMovies((prevMovies) => [
                 ...data.results.filter((movie) => !prevMovies.some((m) => m.id === movie.id)),
             ]);
-            setTotalPages(data.total_pages);
+            console.log(data);
         });
     }, [page, selectedGenres]);
 
@@ -30,7 +30,7 @@ function Movies() {
 
     return (
         <div>
-            <h2>Movies</h2>
+            <h2>TV Series</h2>
             <Genres
                 type="tv"
                 selectedGenres={selectedGenres}

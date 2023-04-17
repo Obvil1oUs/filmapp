@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Form, FormGroup, FormCheck } from 'react-bootstrap';
-import { fetchGenres } from '../../config/MovieServices';
+import { fetchGenres } from '../../services/MovieServices';
 
 const Genres = ({ selectedGenres, setSelectedGenres, genres, setGenres, setPage, type }) => {
 

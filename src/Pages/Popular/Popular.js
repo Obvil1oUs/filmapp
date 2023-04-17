@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import SingleMovie from "../../Components/SingleMovie/SingleMovie";
-import { fetchPopularMovies } from "../../config/MovieServices";
+import { fetchPopularMovies } from "../../services/MovieServices";
 import CustomPagination from "../../Components/Pagination/CustomPagination";
 import "./Popular.css";
 
 function Popular() {
     const [movies, setMovies] = useState([]);
     const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
+    const totalPages = 10;
 
     useEffect(() => {
         if (page === 1) {
@@ -17,7 +17,6 @@ function Popular() {
             setMovies((prevMovies) => [
                 ...data.results.filter((movie) => !prevMovies.some((m) => m.id === movie.id)),
             ]);
-            setTotalPages(data.total_pages);
         });
     }, [page]);
 

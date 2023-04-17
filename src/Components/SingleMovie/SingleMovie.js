@@ -1,6 +1,6 @@
 import React from 'react';
 import { Badge } from 'react-bootstrap';
-import { img_300, unavailable } from '../../config/config'
+import { img_300, unavailable } from '../../services/config'
 import './SingleMovie.css';
 
 const SingleMovie = ({
